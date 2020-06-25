@@ -4,10 +4,12 @@ const morgan = require("morgan");
 // const postList = require("./views/postList");
 // const postDetails = require("./views/postDetails");
 const views = require("./views");
-const routes = require('./routes/posts');
+const wikiRoutes = require('./routes/wiki');
+const userRoutes = require('./routes/user')
 const path = require("path");
 // const { db } = require('./models');
 const models = require('./models');
+
 
 const app = express();
 // parses url-encoded bodies
@@ -38,11 +40,11 @@ app.use(express.static(path.join(__dirname,"/stylesheets")));
 //   console.log('connected to the database');
 // })
 
-app.use('/', routes);
+app.use('/wiki', wikiRoutes);
 
-// app.get("/", (req, res) => {
-//   res.redirect("/posts");
-// })
+app.get("/", (req, res) => {
+  res.redirect("/wiki");
+})
 
 // const PORT = 1338;
 
