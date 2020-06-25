@@ -24,6 +24,7 @@ router.post("/", async (req, res, next) => {
         title: req.body.title,
         content: req.body.content
       });
+      console.log(page);
       try {
         await page.save();
         res.redirect('/');
