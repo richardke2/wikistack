@@ -6,7 +6,8 @@ const morgan = require("morgan");
 const views = require("./views");
 const routes = require('./routes/posts');
 const path = require("path");
-const { db } = require('./models');
+// const { db } = require('./models');
+const models = require('./models');
 
 const app = express();
 // parses url-encoded bodies
@@ -15,14 +16,27 @@ app.use(express.urlencoded({ extended: false }));
 // // parses json bodies
 app.use(express.json());
 
+const init = async () => {
+  await models.db.sync();
+
+  const PORT = 1338;
+
+  app.listen(PORT, () => {
+    console.log(`App listening in port ${PORT}`);
+  });
+
+};
+
+init();
+
 app.use(morgan("dev"));
 // app.use(express.static(__dirname + "/stylesheets"));
 app.use(express.static(path.join(__dirname,"/stylesheets")));
 
-db.authenticate().
-then(() => {
-  console.log('connected to the database');
-})
+// db.authenticate().
+// then(() => {
+//   console.log('connected to the database');
+// })
 
 app.use('/', routes);
 
@@ -30,8 +44,8 @@ app.use('/', routes);
 //   res.redirect("/posts");
 // })
 
-const PORT = 1338;
+// const PORT = 1338;
 
-app.listen(PORT, () => {
-  console.log(`App listening in port ${PORT}`);
-});
+// app.listen(PORT, () => {
+//   console.log(`App listening in port ${PORT}`);
+// });
