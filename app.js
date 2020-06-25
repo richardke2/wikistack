@@ -46,8 +46,16 @@ app.get("/", (req, res) => {
   res.redirect("/wiki");
 })
 
+function generateSlug (title) {
+  // Removes all non-alphanumeric characters from title
+  // And make whitespace underscore
+  return title.replace(/\s+/g, '_').replace(/\W/g, '');
+}
+
 // const PORT = 1338;
 
 // app.listen(PORT, () => {
 //   console.log(`App listening in port ${PORT}`);
 // });
+
+module.exports = {generateSlug};
